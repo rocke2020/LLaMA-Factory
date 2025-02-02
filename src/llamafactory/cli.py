@@ -91,6 +91,7 @@ def main():
             master_addr = os.getenv("MASTER_ADDR", "127.0.0.1")
             master_port = os.getenv("MASTER_PORT", str(random.randint(20001, 29999)))
             logger.info_rank0(f"Initializing distributed tasks at: {master_addr}:{master_port}")
+            logger.info(f'{sys.argv[1:] = }')
             process = subprocess.run(
                 (
                     "torchrun --nnodes {nnodes} --node_rank {node_rank} --nproc_per_node {nproc_per_node} "

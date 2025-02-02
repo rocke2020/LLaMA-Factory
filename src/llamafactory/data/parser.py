@@ -16,6 +16,7 @@ import json
 import os
 from dataclasses import dataclass
 from typing import Any, Dict, List, Literal, Optional, Sequence
+from loguru import logger
 
 from transformers.utils import cached_file
 

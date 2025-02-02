@@ -46,9 +46,12 @@ def _encode_supervised_example(
     mask_history: bool,
 ) -> Tuple[List[int], List[int]]:
     messages = template.mm_plugin.process_messages(prompt + response, images, videos, processor)
+    logger.info(f'{messages = }, {len(messages) = }')
     input_ids, labels = template.mm_plugin.process_token_ids([], [], images, videos, tokenizer, processor)
     encoded_pairs = template.encode_multiturn(tokenizer, messages, system, tools)
     total_length = len(input_ids) + (1 if template.efficient_eos else 0)
+    # total_length = 0, len(input_ids) = 0, len(labels) = 0, labels[:10] = []
+    # logger.info(f'{total_length = }, {len(input_ids) = }, {len(labels) = }, {labels[:10] = }')
     if mask_history:
         encoded_pairs = encoded_pairs[::-1]  # high priority for last turns
 
