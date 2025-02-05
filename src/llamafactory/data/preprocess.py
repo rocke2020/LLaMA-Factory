@@ -41,6 +41,7 @@ def get_preprocess_and_print_func(
     processor: Optional["ProcessorMixin"],
     do_generate: bool = False,
 ) -> Tuple[Callable, Callable]:
+    """ batched = True """
     if stage == "pt":
         preprocess_func = partial(
             preprocess_pretrain_dataset,
