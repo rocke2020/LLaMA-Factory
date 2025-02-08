@@ -246,7 +246,6 @@ def align_dataset(
         convert_func = partial(convert_alpaca, dataset_attr=dataset_attr, data_args=data_args)
     else:
         convert_func = partial(convert_sharegpt, dataset_attr=dataset_attr, data_args=data_args)
-    logger.info(f'{training_args.local_process_index = }')
     column_names = list(next(iter(dataset)).keys())
     kwargs = {}
     if not data_args.streaming:
