@@ -269,9 +269,14 @@ def get_dataset(
         eval_dataset = _get_preprocessed_dataset(
             eval_dataset, data_args, training_args, stage, template, tokenizer, processor, is_eval=True
         )
-
+        logger.info(f'{eval_dataset = }')
         if data_args.val_size > 1e-6:
             dataset_dict = split_dataset(dataset, data_args, seed=training_args.seed)
+            val_set = dataset_dict["validation"]
+            logger.info(f'{val_set = }')
+            for data in val_set:
+                logger.info(f'first auto split eval {data = }')
+                break
         else:
             dataset_dict = {}
             if dataset is not None:
@@ -285,7 +290,9 @@ def get_dataset(
                     eval_dataset = eval_dataset.shuffle(buffer_size=data_args.buffer_size, seed=training_args.seed)
 
                 dataset_dict["validation"] = eval_dataset
-
+                for data in eval_dataset:
+                    logger.info(f'first fixed eval_dataset {data = }')
+                    break
             dataset_dict = DatasetDict(dataset_dict)
 
         if data_args.tokenized_path is not None:
